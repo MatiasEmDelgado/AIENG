@@ -111,3 +111,36 @@ python ingest.py
 python main.py
 ```
 
+---
+
+# Módulo 4: Sistema RAG Escalable en la Nube con Pinecone y Búsqueda Híbrida 🌲
+
+Pipeline de recuperación híbrida en la nube combinando búsqueda vectorial densa con Pinecone Serverless y búsqueda léxica dispersa con BM25 (`EnsembleRetriever`), evaluado mediante métricas objetivas de recuperación.
+
+### Dependencias adicionales
+```bash
+pip install -q pinecone langchain-pinecone rank-bm25
+
+```
+
+### Configuración de Variables
+Asegúrate de configurar en tu archivo `.env`:
+
+```env
+PINECONE_API_KEY=tu_api_key_de_pinecone
+INDEX_NAME=techcorp-rag-hibrido
+```
+
+### Ejecución y Pruebas
+
+```bash
+# 1. Indexar los datos en Pinecone Serverless
+cd entrega4
+python ingest.py
+
+# 2. Ejecutar la evaluación del benchmark
+python evaluate.py
+
+# 3. Probar el modo interactivo CLI
+python main.py
+```

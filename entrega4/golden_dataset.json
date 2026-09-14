@@ -1,0 +1,22 @@
+[
+  {
+    "pregunta": "¿Cuántos días de vacaciones le corresponden a un empleado con 6 años de antigüedad?",
+    "documento_id_esperado": "politica_vacaciones.txt"
+  },
+  {
+    "pregunta": "¿Cuál es la velocidad mínima de conexión a internet requerida para el home office?",
+    "documento_id_esperado": "politica_teletrabajo.txt"
+  },
+  {
+    "pregunta": "¿Cada cuántos días se deben renovar las contraseñas según las normas internas?",
+    "documento_id_esperado": "politica_seguridad_informatica.txt"
+  },
+  {
+    "pregunta": "¿Cuánto tiempo dura el proceso de incorporación de nuevos empleados y quién acompaña al ingresante?",
+    "documento_id_esperado": "onboarding_nuevos_empleados.txt"
+  },
+  {
+    "pregunta": "¿Qué plazo tiene un empleado para reportar un incidente de phishing o acceso no autorizado?",
+    "documento_id_esperado": "politica_seguridad_informatica.txt"
+  }
+]
