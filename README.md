@@ -79,3 +79,14 @@ Para poner a prueba la intercambiabilidad de los clientes y el soporte de stream
 ```bash
 python main.py
 ```
+
+---
+
+# Módulo 2: Pipeline de Extracción de Entidades Técnicas (LCEL & Resiliencia) 🛠️
+
+Pipeline asíncrono para procesar texto desestructurado (logs o descripciones de arquitectura) y convertirlo en un objeto validado mediante Pydantic y LangChain.
+
+### Dependencias adicionales
+```bash
+pip install -q langchain langchain-core langchain-openai langchain-anthropic langchain-google-genai
+
