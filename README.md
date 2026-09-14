@@ -89,4 +89,25 @@ Pipeline asíncrono para procesar texto desestructurado (logs o descripciones de
 ### Dependencias adicionales
 ```bash
 pip install -q langchain langchain-core langchain-openai langchain-anthropic langchain-google-genai
+```
+
+---
+
+# Módulo 3: Sistema RAG Local con ChromaDB 📚
+
+Flujo End-to-End de RAG para responder consultas sobre políticas internas utilizando ChromaDB local y LangChain (LCEL) con salida estructurada anti-alucinación.
+
+### Dependencias adicionales
+
+```bash
+pip install -q chromadb langchain-chroma langchain-huggingface sentence-transformers langchain-community tiktoken
+```
+
+## Ejecución
+
+```Bash
+cd entrega3
+python ingest.py
+python main.py
+```
 
