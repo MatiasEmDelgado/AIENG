@@ -1,0 +1,23 @@
+# Entorno virtual
+.venv/
+venv/
+env/
+
+# Credenciales y variables de entorno
+**/.env
+**/.env.*
+!.env.example
+
+# Caché de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Configuración del IDE (PyCharm / VS Code)
+.idea/
+.vscode/
+
+# Distribución y compilación
+build/
+dist/
+*.egg-info/
