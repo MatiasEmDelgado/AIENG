@@ -2,8 +2,8 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-from langchain_openai import ChatOpenAI
-from langgraph.graph import StateGraph, MessagesState, START, END
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langgraph.graph import StateGraph, MessagesState, START
 from langgraph.prebuilt import ToolNode, tools_condition
 from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
 
@@ -17,8 +17,10 @@ DB_PATH = BASE_DIR / "checkpoints.db"
 
 
 def build_model():
-    model_name = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
-    llm = ChatOpenAI(model=model_name, temperature=0.1)
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-3.8-flash",
+        temperature=0.1,
+    )
     return llm.bind_tools(ALL_TOOLS)
 
 
@@ -33,14 +35,11 @@ async def get_agent_graph(checkpointer: AsyncSqliteSaver):
 
     workflow = StateGraph(MessagesState)
 
-    # Nodos
     workflow.add_node("agent", call_model_node)
     workflow.add_node("tools", tool_node)
 
-    # Aristas
     workflow.add_edge(START, "agent")
     workflow.add_conditional_edges("agent", tools_condition)
     workflow.add_edge("tools", "agent")
 
-    # Compilar con el checkpointer de persistencia
     return workflow.compile(checkpointer=checkpointer)

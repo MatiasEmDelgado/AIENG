@@ -1,0 +1,72 @@
+[
+  {
+    "paso": 1,
+    "input": "¿Cuántos pedidos tuvo el cliente 102, cuál fue el total acumulado y qué productos compró en su último pedido?",
+    "eventos": [
+      {
+        "tipo": "HumanMessage",
+        "contenido": "¿Cuántos pedidos tuvo el cliente 102, cuál fue el total acumulado y qué productos compró en su último pedido?",
+        "tool_calls": null
+      },
+      {
+        "tipo": "AIMessage",
+        "contenido": "[]",
+        "tool_calls": [
+          {
+            "name": "buscar_pedidos_cliente",
+            "args": {
+              "cliente_id": 102
+            },
+            "id": "call_923420",
+            "type": "tool_call"
+          }
+        ]
+      },
+      {
+        "tipo": "ToolMessage",
+        "contenido": "{\"cliente\": \"Carlos Gómez\", \"cantidad_pedidos\": 3, \"monto_total\": 14500, \"pedidos\": [{\"pedido_id\": \"P-102-1\", \"monto\": 5000, \"estado\": \"entregado\", \"fecha\": \"2026-01-15\"}, {\"pedido_id\": \"P-102-2\", \"monto\": 3500, \"estado\": \"entregado\", \"fecha\": \"2026-02-20\"}, {\"pedido_id\": \"P-102-3\", \"monto\": 6000, \"estado\": \"entregado\", \"fecha\": \"2026-03-05\"}]}",
+        "tool_calls": null
+      },
+      {
+        "tipo": "AIMessage",
+        "contenido": "[]",
+        "tool_calls": [
+          {
+            "name": "consultar_detalle_pedido",
+            "args": {
+              "pedido_id": "P-102-3"
+            },
+            "id": "call_783731",
+            "type": "tool_call"
+          }
+        ]
+      },
+      {
+        "tipo": "ToolMessage",
+        "contenido": "{\"pedido_id\": \"P-102-3\", \"detalle\": {\"items\": [\"Monitor 24 pulgadas\", \"Cable HDMI\"], \"pago\": \"Tarjeta de Débito\"}}",
+        "tool_calls": null
+      },
+      {
+        "tipo": "AIMessage",
+        "contenido": "[{'type': 'text', 'text': 'Para el **cliente 102 (Carlos Gómez)**:\\n\\n* **Cantidad de pedidos:** 3 pedidos.\\n* **Monto total acumulado:** $14.500.\\n* **Productos de su último pedido (`P-102-3`, 05/03/2026):**\\n  * Monitor 24 pulgadas\\n  * Cable HDMI', 'extras': {'signature': 'EsoCCscCAWkUfRNJKcPqQrq9UrLjcDkT65kQYSc5RaTF0EtavYpXkLwEFbwhdVVMtAvl3P0111J95A9OSdqy+7rQqJLLPgqULPru9En9dm/usAAe9mcLxGqBw9oxfv3yMOzRDpfG43vJZcFnBl8zHGyF/Vcq+vh5n8H9pUotkSFIWkxiU0QuXHs2JnswN6MsyQvneFF5d4oL8vcc2PrKrDKVojI9rVHa+ZC4iwaqMfoLAGvEam6L003tp3oj8xX0qVAbAdxZPGQJe5NJ3UKNz5FrCbUxCiAWzdlGHa9TkZw+3f+jOl5RWhOUzU4Xc58hldvKo++sxMLJamtdfq6+vvvwaVofEpWRonMbDnv00/ZKezvNWCO7fE+G/IZ7ksc65e6FH/zfZJXNBHdpSPGCEsP0Tm9vMmwU0B1iDdCIPnzoU5aWGnYSbeT1hgbJ'}}]",
+        "tool_calls": []
+      }
+    ]
+  },
+  {
+    "paso": 2,
+    "input": "¿Y cómo abonó ese último pedido?",
+    "eventos": [
+      {
+        "tipo": "HumanMessage",
+        "contenido": "¿Y cómo abonó ese último pedido?",
+        "tool_calls": null
+      },
+      {
+        "tipo": "AIMessage",
+        "contenido": "[{'type': 'text', 'text': 'Abonó ese último pedido con **Tarjeta de Débito**.', 'extras': {'signature': 'EoUDCoIDAWkUfRNpYbJgHCRqdXI/aThEKr+pTxKBj2aDh2FhR92rauNGh5KX+yvA0klwXdKfvyC4eQYGQ816QzlUe9KaiJlw9xpuD2hwEuV8tQJnLwzdt1YgfsDQvlQvPiLOZGvNapbzRbr6R4gsn+0DLSTIzn+pzzACVhU231UMU4q7E0bb36E8mocJce1mwy+CB/JWdtgFpFajdN0XH8i1L29Qoqni+cefRq/KNtuqENco9rVe43MyYMn99k3RIuGFx9h/UJfy+hnyf5peu3Z7NhX7ySX3lvpNBvUrhUnRbCKjDJjXxquiMWIqhflNGuSvH3eL84cMcVlCiZyiT64WiCDAkvJ4fHbxd1qveC04kYEwFcERRzOm9jI404eEfM7e7ttMp3bT6Z2xrhOYMyTgg37OOMtmPEgjZRXvZ8KsP76Hw3OZVZ4afH8H3+b+qQavdjkYYP/KfR+S6s1XokEQCmgAuk63aeDwKcCOiDvIySueTsSlfkTWN4qLkSIp/3gHe3L9kgU='}}]",
+        "tool_calls": []
+      }
+    ]
+  }
+]
