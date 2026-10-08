@@ -183,3 +183,58 @@ python main.py
 ### Evidencia de Ejecución (Traza ReAct)
 * **Razonamiento multi-paso:** El agente encadena automáticamente la búsqueda del listado de pedidos del cliente y la inspección del detalle de la última orden para responder al objetivo general[cite: 14, 21].
 * **Persistencia de sesión:** Al formular una repregunta contextual (`"¿Y cómo abonó ese último pedido?"`), el agente recupera el estado previo del `thread_id` en SQLite sin requerir llamadas redundantes[cite: 12, 14, 21].
+
+
+
+---
+
+# Módulo 6: Orquestador Multi-Agente Especializado (Topología Jerárquica con LangGraph) 👥 orchestrator
+
+Sistema multi-agente jerárquico basado en el patrón **Supervisor/Router**, diseñado para resolver consultas que involucran múltiples dominios técnicos (investigación técnica externa y cómputo/análisis cuantitativo) con síntesis ejecutiva final y control estricto de recursión.
+
+### Topología y Justificación Arquitectónica
+Se implementó una **topología jerárquica** centralizada en un nodo **Supervisor**:
+* **Aislamiento de contexto:** Los especialistas (`researcher` y `analyst`) solo reciben los datos indispensables para ejecutar su tarea, evitando la contaminación de contexto entre dominios.
+* **Resolución de conflictos y rúbrica de parada:** El Supervisor es la única entidad que decide el ruteo mediante retornos tipados (`Literal['researcher', 'analyst', 'FINISH']`), evaluando si la información es suficiente o si requiere refinamiento antes de emitir la síntesis final y pasar al nodo de finalización (`END`).
+* **Prevención del "Supervisor Infinito":** Se incorpora un contador de pasos acumulativo (`step_count`) dentro del estado estructurado para forzar la finalización controlada si el flujo alcanza el umbral máximo de pasos.
+
+### Diagrama del Grafo (Mermaid)
+
+```mermaid
+graph TD
+    __start__([START]) --> supervisor[Nodo Supervisor]
+    
+    supervisor -.->|next_step = researcher| researcher[Especialista Investigación]
+    supervisor -.->|next_step = analyst| analyst[Especialista Análisis/Cómputo]
+    supervisor -.->|next_step = FINISH| __end__([END / Síntesis])
+    
+    researcher --> supervisor
+    analyst --> supervisor
+```
+
+### Componentes de la solución
+* **`state.py`**: Esquema `AgentState` (`TypedDict`) con mensajes acumulativos (`operator.add`), buffers específicos (`research_data`, `analysis_data`), decisión de ruteo (`next_step`) y contador de iteraciones (`step_count`).
+* **`research_agent.py`**: Agente especialista equipado con la herramienta `consultar_benchmarks_cloud`, enfocado en recuperar métricas de rendimiento y costos base de infraestructura.
+* **`analyst_agent.py`**: Agente especialista equipado con la herramienta `calcular_tco_anual`, enfocado en procesar estimaciones cuantitativas, impacto por latencia y proyección financiera según volumen.
+* **`supervisor.py`**: Controlador de flujo con salida estructurada (`Pydantic` + `with_structured_output`) que audita las contribuciones de los especialistas y redacta la síntesis ejecutiva de cierre.
+* **`graph.py`**: Ensamblado del `StateGraph` integrando los nodos, las aristas de retorno y las aristas condicionales de decisión.
+* **`main.py`**: Script ejecutable de demostración del flujo multi-agente y exportación automática del diagrama Mermaid a `graph_diagram.md`.
+
+### Dependencias
+```bash
+pip install -q langgraph langchain-google-genai langchain-core pydantic
+```
+
+### Configuración de Variables
+Asegúrate de configurar en tu archivo `.env`:
+```env
+GOOGLE_API_KEY=tu_api_key_de_gemini
+```
+
+### Ejecución y Pruebas
+
+```bash
+# Ejecutar la demostración del orquestador multi-agente
+cd entrega6
+python main.py
+```
