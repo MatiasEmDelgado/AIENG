@@ -1,0 +1,24 @@
+services:
+  version: '3.8'
+
+  services:
+    redis:
+      image: redis:7-alpine
+      container_name: redis-entrega7
+      ports:
+        - "6379:6379"
+      restart: unless-stopped
+
+    api:
+      build: .
+      container_name: api-entrega7
+      ports:
+        - "8000:8000"
+      environment:
+        - REDIS_URL=redis://redis:6379/0
+        - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+        - LANGSMITH_TRACING=${LANGSMITH_TRACING}
+        - LANGSMITH_API_KEY=${LANGSMITH_API_KEY}
+        - LANGSMITH_PROJECT=${LANGSMITH_PROJECT}
+      depends_on:
+        - redis
